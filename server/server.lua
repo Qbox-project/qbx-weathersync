@@ -169,7 +169,7 @@ end)
 -- COMMANDS
 lib.addCommand('freezetime', {
 	help = Lang:t('help.freezecommand'),
-	restricted = 'admin',
+	restricted = 'group.admin',
 }, function(source)
     local newstate = setTimeFreeze()
     if newstate then TriggerClientEvent('QBCore:Notify', source, Lang:t('time.frozenc'))
@@ -178,7 +178,7 @@ end)
 
 lib.addCommand('freezeweather', {
 	help = Lang:t('help.freezecommand'),
-    restricted = 'admin',
+    restricted = 'group.admin',
     },
 function(source)
     local newstate = setDynamicWeather()
@@ -191,7 +191,7 @@ lib.addCommand('weather', {
 	params = {
 		{ name = Lang:t('help.weathertype'), type = 'string', help = Lang:t('help.availableweather') },
 	},
-	restricted = 'admin',
+	restricted = 'group.admin',
 }, function(source, args)
     local weatherType = args[Lang:t('help.weathertype')]
     local success = setWeather(weatherType)
@@ -201,7 +201,7 @@ end)
 
 lib.addCommand('blackout', {
 	help = Lang:t('help.blackoutcommand'),
-	restricted = 'admin',
+	restricted = 'group.admin',
 }, function(source)
     local newstate = setBlackout()
     if newstate then TriggerClientEvent('QBCore:Notify', source, Lang:t('blackout.enabledc'))
@@ -210,7 +210,7 @@ end)
 
 lib.addCommand('morning', {
 	help = Lang:t('help.morningcommand'),
-	restricted = 'admin',
+	restricted = 'group.admin',
 }, function(source)
     setTime(9, 0)
     TriggerClientEvent('QBCore:Notify', source, Lang:t('time.morning'))
@@ -218,7 +218,7 @@ end)
 
 lib.addCommand('noon', {
 	help = Lang:t('help.nooncommand'),
-	restricted = 'admin',
+	restricted = 'group.admin',
 }, function(source)
     setTime(12, 0)
     TriggerClientEvent('QBCore:Notify', source, Lang:t('time.noon'))
@@ -226,7 +226,7 @@ end)
 
 lib.addCommand('evening', {
 	help = Lang:t('help.eveningcommand'),
-	restricted = 'admin',
+	restricted = 'group.admin',
 }, function(source)
     setTime(18, 0)
     TriggerClientEvent('QBCore:Notify', source, Lang:t('time.evening'))
@@ -234,7 +234,7 @@ end)
 
 lib.addCommand('night', {
 	help = Lang:t('help.nightcommand'),
-	restricted = 'admin',
+	restricted = 'group.admin',
 }, function(source)
     setTime(23, 0)
     TriggerClientEvent('QBCore:Notify', source, Lang:t('time.night'))
@@ -246,7 +246,7 @@ lib.addCommand('time', {
         { name = Lang:t('help.timehname'), help =Lang:t('help.timeh') },
         { name = Lang:t('help.timemname'), help = Lang:t('help.timem') }
 	},
-	restricted = 'admin',
+	restricted = 'group.admin',
 }, function(source, args)
     local hour = args[Lang:t('help.timehname')]
     local minute = args[Lang:t('help.timemname')]
