@@ -215,7 +215,7 @@ end)
 lib.addCommand('time', {help = Lang:t('help.timecommand'), restricted = 'admin', params = {{name = 'hours', type = 'number', help = Lang:t('help.timeh')}, {name = 'minutes', type = 'number', help = Lang:t('help.timem')}}
 }, function(source, args)
     local success = setTime(args.hours, args.minutes)
-    if success then TriggerClientEvent('QBCore:Notify', source, Lang:t('time.changec', {value = argsargs.hours..':'..(args.minutes or "00")}))
+    if success then TriggerClientEvent('QBCore:Notify', source, Lang:t('time.changec', {value = args.hours..':'..(args.minutes or "00")}))
     else TriggerClientEvent('QBCore:Notify', source, Lang:t('time.invalidc'), 'error') end
 end)
 
