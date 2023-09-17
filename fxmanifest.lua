@@ -1,16 +1,21 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'vSyncRevamped'
+description 'https://github.com/Qbox-project/qbx-weathersync'
 version '2.0.0'
 
 shared_scripts {
+	'@qbx-core/import.lua',
 	'config.lua',
-	'@qb-core/shared/locale.lua',
+	'@qbx-core/shared/locale.lua',
 	'locales/en.lua'
 }
 
 server_script 'server/server.lua'
 client_script 'client/client.lua'
+
+modules {
+	'qbx-core:core'
+}
 
 lua54 'yes'
