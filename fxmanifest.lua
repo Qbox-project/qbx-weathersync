@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'QBX-Weathersync'
+description 'Syncs weather and time of day between players'
 repository 'https://github.com/Qbox-project/qbx-weathersync'
 version '2.0.0'
 
