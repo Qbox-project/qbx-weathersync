@@ -96,9 +96,9 @@ CreateThread(function()
                 second = 0
             end
             baseTime = newBaseTime
-            hour = math.floor(((baseTime+timeOffset)/60)%24)
-            if minute ~= math.floor((baseTime+timeOffset)%60) then  --Reset seconds to 0 when new minute
-                minute = math.floor((baseTime+timeOffset)%60)
+            hour = math.floor(((baseTime + timeOffset) / 60) % 24)
+            if minute ~= math.floor((baseTime + timeOffset) % 60) then  --Reset seconds to 0 when new minute
+                minute = math.floor((baseTime + timeOffset) % 60)
                 second = 0
             end
             NetworkOverrideClockTime(hour, minute, second)          --Send hour included seconds to network clock time
