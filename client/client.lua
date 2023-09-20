@@ -1,5 +1,5 @@
-local CurrentWeather = Config.StartWeather
-local lastWeather = CurrentWeather
+local currentWeather = Config.StartWeather
+local lastWeather = currentWeather
 local baseTime = Config.BaseTime
 local timeOffset = Config.TimeOffset
 local timer = 0
@@ -33,7 +33,7 @@ RegisterNetEvent('qb-weathersync:client:DisableSync', function()
 end)
 
 RegisterNetEvent('qb-weathersync:client:SyncWeather', function(NewWeather, newblackout)
-    CurrentWeather = NewWeather
+    currentWeather = NewWeather
     blackout = newblackout
 end)
 
@@ -46,9 +46,9 @@ end)
 CreateThread(function()
     while true do
         if not disable then
-            if lastWeather ~= CurrentWeather then
-                lastWeather = CurrentWeather
-                SetWeatherTypeOverTime(CurrentWeather, 15.0)
+            if lastWeather ~= currentWeather then
+                lastWeather = currentWeather
+                SetWeatherTypeOverTime(currentWeather, 15.0)
                 Wait(15000)
             end
             Wait(100) -- Wait 0 seconds to prevent crashing.
@@ -96,9 +96,9 @@ CreateThread(function()
                 second = 0
             end
             baseTime = newBaseTime
-            hour = math.floor(((baseTime+timeOffset)/60)%24)
-            if minute ~= math.floor((baseTime+timeOffset)%60) then  --Reset seconds to 0 when new minute
-                minute = math.floor((baseTime+timeOffset)%60)
+            hour = math.floor(((baseTime + timeOffset) / 60) % 24)
+            if minute ~= math.floor((baseTime + timeOffset) % 60) then  --Reset seconds to 0 when new minute
+                minute = math.floor((baseTime + timeOffset) % 60)
                 second = 0
             end
             NetworkOverrideClockTime(hour, minute, second)          --Send hour included seconds to network clock time

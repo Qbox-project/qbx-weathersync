@@ -1,5 +1,4 @@
-local QBCore = exports['qbx-core']:GetCoreObject()
-local CurrentWeather = Config.StartWeather
+local currentWeather = Config.StartWeather
 local baseTime = Config.BaseTime
 local timeOffset = Config.TimeOffset
 local freezeTime = Config.FreezeTime
@@ -27,20 +26,20 @@ end
 
 --- Triggers event to switch weather to next stage
 local function nextWeatherStage()
-    if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY" then
-        CurrentWeather = (math.random(1, 5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
-    elseif CurrentWeather == "CLEARING" or CurrentWeather == "OVERCAST" then
+    if currentWeather == "CLEAR" or currentWeather == "CLOUDS" or currentWeather == "EXTRASUNNY" then
+        currentWeather = (math.random(1, 5) > 2) and "CLEARING" or "OVERCAST" -- 60/40 chance
+    elseif currentWeather == "CLEARING" or currentWeather == "OVERCAST" then
         local new = math.random(1, 6)
-        if new == 1 then CurrentWeather = (CurrentWeather == "CLEARING") and "FOGGY" or "RAIN"
-        elseif new == 2 then CurrentWeather = "CLOUDS"
-        elseif new == 3 then CurrentWeather = "CLEAR"
-        elseif new == 4 then CurrentWeather = "EXTRASUNNY"
-        elseif new == 5 then CurrentWeather = "SMOG"
-        else CurrentWeather = "FOGGY"
+        if new == 1 then currentWeather = (currentWeather == "CLEARING") and "FOGGY" or "RAIN"
+        elseif new == 2 then currentWeather = "CLOUDS"
+        elseif new == 3 then currentWeather = "CLEAR"
+        elseif new == 4 then currentWeather = "EXTRASUNNY"
+        elseif new == 5 then currentWeather = "SMOG"
+        else currentWeather = "FOGGY"
         end
-    elseif CurrentWeather == "THUNDER" or CurrentWeather == "RAIN" then CurrentWeather = "CLEARING"
-    elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then CurrentWeather = "CLEAR"
-    else CurrentWeather = "CLEAR"
+    elseif currentWeather == "THUNDER" or currentWeather == "RAIN" then currentWeather = "CLEARING"
+    elseif currentWeather == "SMOG" or currentWeather == "FOGGY" then currentWeather = "CLEAR"
+    else currentWeather = "CLEAR"
     end
     TriggerEvent("qb-weathersync:server:RequestStateSync")
 end
@@ -56,7 +55,7 @@ local function setWeather(weather)
         end
     end
     if not validWeatherType then return false end
-    CurrentWeather = string.upper(weather)
+    currentWeather = string.upper(weather)
     newWeatherTimer = Config.NewWeatherTimer
     TriggerEvent('qb-weathersync:server:RequestStateSync')
     return true
@@ -112,7 +111,7 @@ end
 
 -- EVENTS
 RegisterNetEvent('qb-weathersync:server:RequestStateSync', function()
-    TriggerClientEvent('qb-weathersync:client:SyncWeather', -1, CurrentWeather, blackout)
+    TriggerClientEvent('qb-weathersync:client:SyncWeather', -1, currentWeather, blackout)
     TriggerClientEvent('qb-weathersync:client:SyncTime', -1, baseTime, timeOffset, freezeTime)
 end)
 
@@ -245,7 +244,7 @@ end)
 CreateThread(function()
     while true do
         Wait(300000)
-        TriggerClientEvent('qb-weathersync:client:SyncWeather', -1, CurrentWeather, blackout)
+        TriggerClientEvent('qb-weathersync:client:SyncWeather', -1, currentWeather, blackout)
     end
 end)
 
@@ -271,5 +270,5 @@ exports('setTimeFreeze', setTimeFreeze)
 exports('setDynamicWeather', setDynamicWeather)
 exports('getBlackoutState', function() return blackout end)
 exports('getTimeFreezeState', function() return freezeTime end)
-exports('getWeatherState', function() return CurrentWeather end)
+exports('getWeatherState', function() return currentWeather end)
 exports('getDynamicWeather', function() return Config.DynamicWeather end)
