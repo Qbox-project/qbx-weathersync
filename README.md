@@ -1,9 +1,6 @@
 # qb-weathersync
 Synced weather and time for QB-Core Framework :sunrise:
 
-## Dependencies
-- [qb-core](https://github.com/qbcore-framework/qb-core)
-
 ## Features
 - Syncs the weather for all players
 
