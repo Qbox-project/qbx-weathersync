@@ -120,8 +120,8 @@ RegisterNetEvent('qb-weathersync:server:setWeather', function(weather)
     local src = source
     if not isAllowedToChange(src) then return end
     local success = setWeather(weather)
-    if success then TriggerClientEvent('QBCore:Notify', src, Lang:t('weather.updated'))
-    else TriggerClientEvent('QBCore:Notify', src, Lang:t('weather.invalid'))
+    if success then exports.qbx_core:Notify(src, Lang:t('weather.updated'))
+    else exports.qbx_core:Notify(src, Lang:t('weather.invalid'))
     end
 end)
 
@@ -130,8 +130,8 @@ RegisterNetEvent('qb-weathersync:server:setTime', function(hour, minute)
     local src = source
     if not isAllowedToChange(src) then return end
     local success = setTime(hour, minute)
-    if success then TriggerClientEvent('QBCore:Notify', src, Lang:t('time.change', {value = hour, value2 = minute or "00"}))
-    else TriggerClientEvent('QBCore:Notify', src, Lang:t('time.invalid'))
+    if success then exports.qbx_core:Notify(src, Lang:t('time.change', {value = hour, value2 = minute or "00"}))
+    else exports.qbx_core:Notify(src, Lang:t('time.invalid'))
     end
 end)
 
@@ -140,8 +140,8 @@ RegisterNetEvent('qb-weathersync:server:toggleBlackout', function(state)
     local src = source
     if not isAllowedToChange(src) then return end
     local newstate = setBlackout(state)
-    if newstate then TriggerClientEvent('QBCore:Notify', src, Lang:t('blackout.enabled'))
-    else TriggerClientEvent('QBCore:Notify', src, Lang:t('blackout.disabled'))
+    if newstate then exports.qbx_core:Notify(src, Lang:t('blackout.enabled'))
+    else exports.qbx_core:Notify(src, Lang:t('blackout.disabled'))
     end
 end)
 
@@ -150,8 +150,8 @@ RegisterNetEvent('qb-weathersync:server:toggleFreezeTime', function(state)
     local src = source
     if not isAllowedToChange(src) then return end
     local newstate = setTimeFreeze(state)
-    if newstate then TriggerClientEvent('QBCore:Notify', src, Lang:t('time.now_frozen'))
-    else TriggerClientEvent('QBCore:Notify', src, Lang:t('time.now_unfrozen'))
+    if newstate then exports.qbx_core:Notify(src, Lang:t('time.now_frozen'))
+    else exports.qbx_core:Notify(src, Lang:t('time.now_unfrozen'))
     end
 end)
 
@@ -160,62 +160,62 @@ RegisterNetEvent('qb-weathersync:server:toggleDynamicWeather', function(state)
     local src = source
     if not isAllowedToChange(src) then return end
     local newstate = setDynamicWeather(state)
-    if newstate then TriggerClientEvent('QBCore:Notify', src, Lang:t('weather.now_unfrozen'))
-    else TriggerClientEvent('QBCore:Notify', src, Lang:t('weather.now_frozen'))
+    if newstate then exports.qbx_core:Notify(src, Lang:t('weather.now_unfrozen'))
+    else exports.qbx_core:Notify(src, Lang:t('weather.now_frozen'))
     end
 end)
 
 -- COMMANDS
 lib.addCommand('freezetime', {help = Lang:t('help.freezecommand'), restricted = 'admin'}, function(source)
     local newstate = setTimeFreeze()
-    if newstate then TriggerClientEvent('QBCore:Notify', source, Lang:t('time.frozenc'))
-    else TriggerClientEvent('QBCore:Notify', source, Lang:t('time.unfrozenc')) end
+    if newstate then exports.qbx_core:Notify(source, Lang:t('time.frozenc'))
+    else exports.qbx_core:Notify(source, Lang:t('time.unfrozenc')) end
 end)
 
 lib.addCommand('freezeweather', {help = Lang:t('help.freezeweathercommand'), restricted = 'admin'}, function(source)
     local newstate = setDynamicWeather()
-    if newstate then TriggerClientEvent('QBCore:Notify', source, Lang:t('dynamic_weather.enabled'))
-    else TriggerClientEvent('QBCore:Notify', source, Lang:t('dynamic_weather.disabled')) end
+    if newstate then exports.qbx_core:Notify(source, Lang:t('dynamic_weather.enabled'))
+    else exports.qbx_core:Notify(source, Lang:t('dynamic_weather.disabled')) end
 end)
 
 lib.addCommand('weather', {help = Lang:t('help.weathercommand'), restricted = 'admin', params = {{name = 'weathertype', type = 'string', help = Lang:t('help.availableweather')}}
 }, function(source, args)
     local success = setWeather(args.weathertype)
-    if success then TriggerClientEvent('QBCore:Notify', source, Lang:t('weather.willchangeto', {value = string.lower(args.weathertype)}))
-    else TriggerClientEvent('QBCore:Notify', source, Lang:t('weather.invalidc'), 'error') end
+    if success then exports.qbx_core:Notify(source, Lang:t('weather.willchangeto', {value = string.lower(args.weathertype)}))
+    else exports.qbx_core:Notify(source, Lang:t('weather.invalidc'), 'error') end
 end)
 
 lib.addCommand('blackout', {help = Lang:t('help.blackoutcommand'), restricted = 'admin'}, function(source)
     local newstate = setBlackout()
-    if newstate then TriggerClientEvent('QBCore:Notify', source, Lang:t('blackout.enabledc'))
-    else TriggerClientEvent('QBCore:Notify', source, Lang:t('blackout.disabledc')) end
+    if newstate then exports.qbx_core:Notify(source, Lang:t('blackout.enabledc'))
+    else exports.qbx_core:Notify(source, Lang:t('blackout.disabledc')) end
 end)
 
 lib.addCommand('morning', {help = Lang:t('help.morningcommand'), restricted = 'admin'}, function(source)
     setTime(9, 0)
-    TriggerClientEvent('QBCore:Notify', source, Lang:t('time.morning'))
+    exports.qbx_core:Notify(source, Lang:t('time.morning'))
 end)
 
 lib.addCommand('noon', {help = Lang:t('help.nooncommand'), restricted = 'admin'}, function(source)
     setTime(12, 0)
-    TriggerClientEvent('QBCore:Notify', source, Lang:t('time.noon'))
+    exports.qbx_core:Notify(source, Lang:t('time.noon'))
 end)
 
 lib.addCommand('evening', {help = Lang:t('help.eveningcommand'), restricted = 'admin'}, function(source)
     setTime(18, 0)
-    TriggerClientEvent('QBCore:Notify', source, Lang:t('time.evening'))
+    exports.qbx_core:Notify(source, Lang:t('time.evening'))
 end)
 
 lib.addCommand('night', {help = Lang:t('help.nightcommand'), restricted = 'admin'}, function(source)
     setTime(23, 0)
-    TriggerClientEvent('QBCore:Notify', source, Lang:t('time.night'))
+    exports.qbx_core:Notify(source, Lang:t('time.night'))
 end)
 
 lib.addCommand('time', {help = Lang:t('help.timecommand'), restricted = 'admin', params = {{name = 'hours', type = 'number', help = Lang:t('help.timeh')}, {name = 'minutes', type = 'number', help = Lang:t('help.timem')}}
 }, function(source, args)
     local success = setTime(args.hours, args.minutes)
-    if success then TriggerClientEvent('QBCore:Notify', source, Lang:t('time.changec', {value = args.hours..':'..(args.minutes or "00")}))
-    else TriggerClientEvent('QBCore:Notify', source, Lang:t('time.invalidc'), 'error') end
+    if success then exports.qbx_core:Notify(source, Lang:t('time.changec', {value = args.hours..':'..(args.minutes or "00")}))
+    else exports.qbx_core:Notify(source, Lang:t('time.invalidc'), 'error') end
 end)
 
 -- THREAD LOOPS
